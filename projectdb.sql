@@ -9,8 +9,7 @@ create table `user` (
   `first_name` nvarchar(255) not null,
   `last_name` nvarchar(255) not null,
   `email` nvarchar(255) not null,
-  `password` nvarchar(255) not null,
-  `dob` date not null,
+  `password` char(60) not null,
   `signup_date` datetime default current_timestamp,
   primary key(`id`)
 );
@@ -25,6 +24,15 @@ create table `profile` (
   `youtube` nvarchar(255),
   `location` nvarchar(255),
   primary key(`id`)
+);
+
+create table `image` (
+  `id` int unsigned auto_increment primary key,
+  `filename` nvarchar(255) not null,
+  `filetype` nvarchar(50) not null,
+  `filedata` mediumblob,
+  `profile_id` int unsigned not null,
+  foreign key (`profile_id`) references `profile`(`id`) on delete cascade
 );
 
 create table `post` (
@@ -57,9 +65,9 @@ alter table `comment` add constraint `post_id_fk` foreign key(`post_id`) referen
 
 
 /*
-insert into `user`(`first_name`,`last_name`,`email`,`password`,`dob`) values
-('Shawn','Myers','shawn@mail.com','password','1986-07-08'),
-('Jesse','Pinkman','Jess@mail.com','password','1982-09-30');
+insert into `user`(`first_name`,`last_name`,`email`,`password`) values
+('Shawn','Myers','shawn@mail.com','password'),
+('Jesse','Pinkman','Jess@mail.com','password');
 
 insert into `profile`(`user_id`,`about_me`,`location`) values
 ('1', 

@@ -15,24 +15,15 @@
   $user = new User($db);
   $_SESSION['user'] = $user;
 
-  // $data = json_decode(file_get_contents("php://input"));
-
-  $user->first_name = $_POST['first_name'];
-  $user->last_name = $_POST['last_name'];
-  $user->email = $_POST['email'];
-  $user->password = $_POST['password'];
-  $user->confirm = $_POST['confirm'];
-
-  if($user->create()) {
+  if($user->changePassword()) {
     echo json_encode(
-      array('message' => 'User Created')
+      array('message' => 'Password updated')
     );
-    header('Location: ../../login.php');
+    header('Location: ../../index.php');
   } else {
     echo json_encode(
-      array('message' => 'User Not Created',
+      array('message' => 'Password not updated',
             'error' => $user->error)
     );
-    header('Location: ../../registration.php');
+    header('Location: ../../changepassword.php');
   }
-
